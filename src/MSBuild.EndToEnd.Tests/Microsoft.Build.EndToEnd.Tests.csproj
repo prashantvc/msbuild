@@ -5,10 +5,11 @@
     <PlatformTarget>$(RuntimeOutputPlatformTarget)</PlatformTarget>
     <IsPackable>false</IsPackable>
     <!-- These tests execute the bootstrapped MSBuild layout, which is not produced when the
-         bootstrap is disabled (e.g. offline builds with -p:CreateBootstrap=false). Opt the project
-         out of the test run in that case so it still builds but its tests are not executed.
-         Arcade's Test target keys off IsUnitTestProject (Tests.props), so set that. -->
-    <IsUnitTestProject Condition="'$(CreateBootstrap)' == 'false'">false</IsUnitTestProject>
+         bootstrap is disabled (e.g. offline builds with -p:CreateBootstrap=false). Skip running the
+         tests in that case (Arcade gates RunTests on SkipTests) so the project still compiles as a
+         test project but its tests are not executed. Don't toggle IsUnitTestProject here: that would
+         also strip test-only compile references such as Microsoft.DotNet.XUnitV3Extensions. -->
+    <SkipTests Condition="'$(CreateBootstrap)' == 'false'">true</SkipTests>
   </PropertyGroup>
 
   <ItemGroup>
