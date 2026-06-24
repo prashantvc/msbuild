@@ -24,7 +24,11 @@ public class CommunicationUtilitiesTests
 
         foreach (DictionaryEntry item in referenceVars)
         {
-            referenceVars2.Add((string)item.Key!, (string)item.Value!);
+            // Use the indexer rather than Add to mirror how CommunicationsUtilities.GetEnvironmentVariables
+            // builds its (OrdinalIgnoreCase) dictionary. On case-sensitive OSes the environment can contain
+            // keys that differ only by case (e.g. both "no_proxy" and "NO_PROXY"); Add would throw on the
+            // second one, whereas the product code de-duplicates with last-wins.
+            referenceVars2[(string)item.Key!] = (string)item.Value!;
         }
 
         Helpers.AssertCollectionsValueEqual(envVars, referenceVars2);
