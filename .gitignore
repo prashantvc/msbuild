@@ -125,6 +125,8 @@ publish/
 
 # NuGet Packages
 *.nupkg
+# Offline NuGet feed: vendored packages checked in so the fork builds without network access.
+!local-packages/*.nupkg
 # The packages folder can be ignored because of Package Restore
 **/packages/*
 # except build/, which is used as an MSBuild target.
@@ -142,6 +144,8 @@ AppPackages/
 # Others
 ClientBin/
 [Ss]tyle[Cc]op.*
+# but keep StyleCop packages vendored in the offline feed
+!local-packages/[Ss]tyle[Cc]op.*.nupkg
 ~$*
 *~
 *.dbmdl
