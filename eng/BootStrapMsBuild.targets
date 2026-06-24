@@ -246,7 +246,7 @@
   </UsingTask>
   <Target Name="AcquireSdk"
           BeforeTargets="PrepareForBuild"
-          Condition="!$(TargetFramework.StartsWith('net4'))">
+          Condition="'$(CreateBootstrap)' != 'false' and !$(TargetFramework.StartsWith('net4'))">
 
     <PropertyGroup>
       <InstallDir>$(ArtifactsBinDir)bootstrap\core\</InstallDir>
