@@ -4,6 +4,11 @@
     <TargetFrameworks>$(RuntimeOutputTargetFrameworks)</TargetFrameworks>
     <PlatformTarget>$(RuntimeOutputPlatformTarget)</PlatformTarget>
     <IsPackable>false</IsPackable>
+    <!-- These tests execute the bootstrapped MSBuild layout, which is not produced when the
+         bootstrap is disabled (e.g. offline builds with -p:CreateBootstrap=false). Opt the project
+         out of the test run in that case so it still builds but its tests are not executed.
+         Arcade's Test target keys off IsUnitTestProject (Tests.props), so set that. -->
+    <IsUnitTestProject Condition="'$(CreateBootstrap)' == 'false'">false</IsUnitTestProject>
   </PropertyGroup>
 
   <ItemGroup>
